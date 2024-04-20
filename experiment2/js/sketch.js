@@ -129,7 +129,7 @@ function tree() {
       let scale = random(0.7, 1);
       let treeY = fullscreen()
         ? height - -100 * scale
-        : height - 100 * scale - random(0, 400);
+        : height - 200 * scale - random(0, 400);
       let tree = {
         baseX: random(width),
         y: treeY,
@@ -144,7 +144,7 @@ function tree() {
   for (let i = treePlacement.length - 1; i >= 0; i--) {
     let tree = treePlacement[i];
     let elapsedTime = (timeNow - tree.startTime) / 1000;
-    let speed = 100;
+    let speed = 50;
 
     tree.x = tree.baseX + elapsedTime * speed * tree.scale;
 
@@ -179,14 +179,14 @@ function checkFullscreen() {
   if (!this.showFull) {
     for (let tree of treePlacement) {
       tree.startTime = millis();
-      tree.y = height - (-1600) * tree.scale;
+      tree.y = height - -125 * tree.scale - random (0,400);
       tree.baseX =
         tree.x - ((millis() - tree.startTime) / 1000) * 100 * tree.scale;
     }
   } else {
     for (let tree of treePlacement) {
       tree.startTime = millis();
-      tree.y = height - (-1600) * tree.scale;
+      tree.y = height - -125 * tree.scale - random(0,400);
       tree.baseX =
         tree.x - ((millis() - tree.startTime) / 1000) * 5 * tree.scale;
     }
