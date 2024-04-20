@@ -179,14 +179,14 @@ function checkFullscreen() {
   if (!this.showFull) {
     for (let tree of treePlacement) {
       tree.startTime = millis();
-      tree.y = height - -125 * tree.scale - random (0,400);
+      tree.y = height - -300 * tree.scale - random (0,400);
       tree.baseX =
         tree.x - ((millis() - tree.startTime) / 1000) * 100 * tree.scale;
     }
   } else {
     for (let tree of treePlacement) {
       tree.startTime = millis();
-      tree.y = height - -125 * tree.scale - random(0,400);
+      tree.y = height - -300 * tree.scale - random(0,400);
       tree.baseX =
         tree.x - ((millis() - tree.startTime) / 1000) * 5 * tree.scale;
     }
