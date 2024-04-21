@@ -7,17 +7,11 @@ let canvasContainer;
 let centerHorz, centerVert;
 let treePlacement = [];
 
-
-
 function setup() {
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
 
-  $("#fullscreen").click(() => {
-    let full = fullscreen();
-    fullscreen(!full);
-  });
   document.addEventListener("fullscreenchange", (event) => {
     resizeScreen();
   });
@@ -46,7 +40,7 @@ function draw() {
   SkyBackground();
   RedMountain();
   FrontRedMountain();
-  Shadows();
+  ground();
   tree();
   seed();
 }
@@ -57,9 +51,9 @@ function SkyBackground() {
 
   for (let y = 0; y < height; y++) {
     this.mix = map(y, 0, height, 0, 1.2);
-    this.mix - constrain(this.mix, 0, 1);
-    this.x = lerpColor(this.MainColor, this.atmosphereColor, this.mix);
-    stroke(this.x);
+    this.mix = constrain(this.mix, 0, 1);
+    this.baseY = lerpColor(this.MainColor, this.atmosphereColor, this.mix);
+    stroke(this.baseY);
     line(0, y, width, y);
   }
 }
@@ -76,7 +70,7 @@ function FrontRedMountain() {
   beginShape();
   for (let i = 0; i < width; i++) {
     this.NoiseAmount = noise((i + this.run) * 0.005);
-    let Elevate = map(this.NoiseAmount, 0, 2, this.fullElevate, height * 0.8);
+    let Elevate = map(this.NoiseAmount, 0, 1, this.fullElevate, height * 0.8);
 
     vertex(i, Elevate);
   }
@@ -99,14 +93,8 @@ function RedMountain() {
   beginShape();
   for (let i = 0; i < width; i++) {
     this.NoiseAmount = noise((i + this.run2) * 0.004);
-    let Elevate = map(
-      this.NoiseAmount,
-      0,
-      1.7,
-      this.fullElevate2,
-      height * 0.8
-    );
-
+    let Elevate = map(this.NoiseAmount, 0, 1, this.fullElevate2, height * 0.8);
+    
     vertex(i, Elevate);
   }
 
@@ -115,7 +103,7 @@ function RedMountain() {
   endShape(CLOSE);
 }
 
-function Shadows() {
+function ground() {
   noStroke();
   fill("#EFE6D2");
   ellipse(width / 2, height - 200, 100 * 90, 700);
@@ -128,8 +116,7 @@ function tree() {
     for (let i = 0; i < 50; i++) {
       let scale = random(0.7, 1);
       let treeY = fullscreen()
-        ? height - -100 * scale
-        : height - 200 * scale - random(0, 400);
+        ? height - -100 * scale : height - 200 * scale - random(0, 400);
       let tree = {
         baseX: random(width),
         y: treeY,
@@ -153,8 +140,7 @@ function tree() {
       tree.x = tree.baseX;
       tree.startTime = timeNow;
       tree.y = fullscreen()
-        ? height - -100 * tree.scale
-        : height - 100 * tree.scale - random(0, 400);
+        ? height - -100 * tree.scale : height - 100 * tree.scale - random(0, 400);
     }
 
     push();
@@ -174,9 +160,9 @@ function tree() {
 }
 
 function checkFullscreen() {
-  this.showFull = fullscreen();
-  fullscreen(!this.showFull);
-  if (!this.showFull) {
+  let full = fullscreen();
+  fullscreen(!full);
+  if (!this.full) {
     for (let tree of treePlacement) {
       tree.startTime = millis();
       tree.y = height - -800 * tree.scale - random (0,400);
@@ -187,8 +173,7 @@ function checkFullscreen() {
     for (let tree of treePlacement) {
       tree.startTime = millis();
       tree.y = height - -800 * tree.scale - random(0,400);
-      tree.baseX =
-        tree.x - ((millis() - tree.startTime) / 1000) * 5 * tree.scale;
+      tree.baseX = tree.x - ((millis() - tree.startTime) / 1000) * 5 * tree.scale;
     }
   }
   resizeScreen();
@@ -196,3 +181,5 @@ function checkFullscreen() {
 }
 
 $("#fullscreen").click(checkFullscreen);
+
+

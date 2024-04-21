@@ -1,7 +1,3 @@
-/* style.css */
-
-/* Set the canvas element to be the full size of the container */
-
 
 #Reimagine {
     padding: 50px;
@@ -21,7 +17,7 @@
 
 
 
-/* Center the canvas element on the page */
+
 html,body {
     height: 100%;
     width: 100%;
