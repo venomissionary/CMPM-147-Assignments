@@ -1,5 +1,5 @@
 // sketch.js - Evolutionary Impression
-// Author: Steven Hernandez
+// Author: Steven Hernandez, Chase Croy-Perrett
 // Date: 5/7/24
 
 
